@@ -1,0 +1,15 @@
+{{ $tld := or ($.Env.DOMAIN_TLD) "docker" }}
+{{range $key, $value := . }}
+# {{ $value.Name }} ({{$value.ID}} from {{$value.Image.Repository}})
+{{range $index, $net := .Networks}}
+{{ if ne $net.IP "" }}
+address=/{{$value.Name}}.{{ $net.Name }}.{{$tld}}/{{ $net.IP }}
+{{end}}
+{{end}}
+{{end}}
+
+
+bind-interfaces
+interface=eth0
+except-interface=lo
+local=/{{$tld}}/
