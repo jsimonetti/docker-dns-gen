@@ -1,4 +1,5 @@
 {{ $tld := or ($.Env.DOMAIN_TLD) "docker" }}
+{{ $arpa := or ($.Env.ARPA) "0.168.192.in-addr.arpa" }}
 {{range $key, $value := . }}
 # {{ $value.Name }} ({{$value.ID}} from {{$value.Image.Repository}})
 {{range $index, $net := .Networks}}
@@ -13,3 +14,4 @@ bind-interfaces
 interface=eth0
 except-interface=lo
 local=/{{$tld}}/
+local=/{{$arpa}}/
